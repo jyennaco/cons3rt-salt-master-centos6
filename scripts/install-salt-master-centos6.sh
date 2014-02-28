@@ -50,14 +50,14 @@ function install-salt-master-centos6() {
 	$logInfo "Enabling salt-master to start automatically upon boot ..."
 	chkconfig salt-master on
 	
+	$logInfo "Configuring salt-master to auto-accept all keys from minions ..."
+	sed -i "s/#auto_accept: False/auto_accept: True/" /etc/salt/master
+	
 	$logInfo "Start the salt-master service ..."
 	service salt-master start
 	
 	$logInfo "Checking to see if salt is running ..."
 	salt --version
-	
-	$logInfo "Configuring salt-master to auto-accept all keys from minions ..."
-	sed -i "s/#auto_accept: False/auto_accept: True/" /etc/salt/master
 	
 	$logIngo "Note that the salt master is listening on ports 4505 and 4506 on all interfaces (0.0.0.0), and is auto-accepting all keys from minions."
 
